@@ -1,7 +1,7 @@
 trigger:
-  branches: [ main ]
+- main
 pr:
-  branches: [ "*" ]
+- "*"
 
 variables:
   TF_VERSION: '1.5.6'
