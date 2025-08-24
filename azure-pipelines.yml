@@ -8,7 +8,7 @@ variables:
   ENV_NAME: 'dev'
   ENV_PATH: 'env/dev'
   STACK_PATH: 'stacks/vnet-dev'
-  AZURE_SERVICE_CONNECTION: 'sc-azure-sp-tf'  # <-- your ARM service connection name
+  AZURE_SERVICE_CONNECTION: 'personalazure'  # <-- your ARM service connection name
 
 stages:
 # -------- PR: Validate & Plan (dev only) ----------
