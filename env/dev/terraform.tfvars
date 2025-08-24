@@ -9,6 +9,6 @@ subnet_cidr = "10.10.2.0/24"
 
 tags = {
   env       = "dev"
-  managedBy = "terraform"
+  managedBy = "terraformcode"
 }
 
