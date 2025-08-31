@@ -49,7 +49,7 @@ stages:
         cd $(STACK_PATH)
         terraform init -backend-config=../../$(ENV_PATH)/backend.hcl
         terraform validate
-        terraform plan 
+        terraform plan \
           -var-file=../../$(ENV_PATH)/terraform.tfvars \
           -out=plan_dev.tfplan
       displayName: "terraform fmt / init / validate / plan"
