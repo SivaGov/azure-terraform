@@ -43,6 +43,14 @@ resource "azurerm_subnet" "subnet" {
   address_prefixes     = [var.subnet_cidr]
 }
 
+resource "azurerm_subnet" "subnet1" {
+  name                 = "${var.name}-subnet02"
+  resource_group_name  = azurerm_resource_group.rg.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+  address_prefixes     = [var.subnet_cidr2]
+}
+
+
 output "rg_name"     { value = azurerm_resource_group.rg.name }
 output "vnet_name"   { value = azurerm_virtual_network.vnet.name }
 output "subnet_name" { value = azurerm_subnet.subnet.name }
