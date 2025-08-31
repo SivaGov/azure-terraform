@@ -13,7 +13,7 @@ variables:
 stages:
 # -------- PR: Validate & Plan (dev only) ----------
 - stage: Plan
-  condition: eq(variables['Build.Reason'], 'PullRequest')
+  displayName: 
   jobs:
   - job: plan_dev
     displayName: "Validate & Plan (dev)"
