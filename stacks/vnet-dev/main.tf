@@ -50,6 +50,13 @@ resource "azurerm_subnet" "subnet1" {
   address_prefixes     = [var.subnet_cidr2]
 }
 
+#calling nsg module
+module "nsgmodule" {
+  source   = "./nsgmodule"
+  name     = var.name
+  location = var.location
+  tags     = var.tags
+}
 
 output "rg_name"     { value = azurerm_resource_group.rg.name }
 output "vnet_name"   { value = azurerm_virtual_network.vnet.name }
