@@ -13,7 +13,7 @@ variables:
 stages:
 # -------- PR: Validate & Plan (dev only) ----------
 - stage: Plan
-  displayName: 
+  displayName: "Validate & Plan (dev)"  
   jobs:
   - job: plan_dev
     displayName: "Validate & Plan (dev)"
