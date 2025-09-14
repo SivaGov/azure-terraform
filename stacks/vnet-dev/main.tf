@@ -58,6 +58,17 @@ module "nsgmodule" {
   tags     = var.tags
 }
 
+#calling vm module
+module "vmmodule" {
+  source         = "./vmmodule"
+  name           = "${var.name}-vm"
+  location       = var.location
+  nic_id         = "${var.name}-nic"
+  admin_username = var.admin_username
+  admin_password = var.admin_password
+  tags           = var.tags
+}
+
 output "rg_name"     { value = azurerm_resource_group.rg.name }
 output "vnet_name"   { value = azurerm_virtual_network.vnet.name }
 output "subnet_name" { value = azurerm_subnet.subnet.name }
