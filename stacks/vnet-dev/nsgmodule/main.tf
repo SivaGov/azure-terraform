@@ -18,6 +18,14 @@ resource "azurerm_network_security_group" "test_nsg" {
   
 }
 
+# Subnet
+resource "azurerm_subnet" "subnet" {
+  name                 = "${var.name}-subnet01"
+  resource_group_name  = azurerm_resource_group.rg.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+  address_prefixes     = [var.subnet_cidr]
+}
+
 resource "azurerm_network_interface" "vm_nic" {
   name                = "${var.name}-nic"
   location            = var.location
