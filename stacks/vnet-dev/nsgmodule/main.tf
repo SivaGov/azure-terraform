@@ -1,7 +1,7 @@
 resource "azurerm_network_security_group" "test_nsg" {
   name                = "${var.name}-nsg"
   location            = var.location
-  resource_group_name = var.name
+  resource_group_name = "${var.name}-rg"
   tags                = var.tags
 
     security_rule {
