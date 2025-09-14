@@ -61,12 +61,11 @@ module "nsgmodule" {
 #calling vm module
 module "vmmodule" {
   source         = "./vmmodule"
-  location = var.location
-  nic_id = module.vmmodule.network_interface_ids
-  name = "${var.name}-vm"
-  admin_username = module.vmmodule.admin_username
-  admin_password = module.vmmodule.admin_password
-  tags     = var.tags
+  name           = var.name
+  location       = var.location
+  admin_username = var.admin_username
+  admin_password = var.admin_password
+  nic_id         = var.nic_id
 }
 
 output "rg_name"     { value = azurerm_resource_group.rg.name }
