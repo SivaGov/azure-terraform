@@ -8,7 +8,7 @@ resource "azurerm_linux_virtual_machine" "vm1" {
   admin_password                  = var.admin_password
   disable_password_authentication = false
 
-  network_interface_ids = "${var.name}-nic"
+  network_interface_ids = vm_nic.id
 
   os_disk {
     caching              = "ReadWrite"
@@ -20,5 +20,19 @@ resource "azurerm_linux_virtual_machine" "vm1" {
     offer     = "0001-com-ubuntu-server-focal"
     sku       = "20_04-lts"
     version   = "latest"
+  }
+}
+
+resource "azurerm_network_interface" "vm_nic" {
+  name                = "${var.name}-nic"
+  location            = var.location
+  resource_group_name = "${var.name}-rg"
+  tags                = var.tags
+
+  ip_configuration {
+    name                          = "ipconfig1"
+    subnet_id                     = azurerm_subnet.subnet.id
+    private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = azurerm_public_ip.subnet.id
   }
 }
