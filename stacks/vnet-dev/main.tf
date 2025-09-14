@@ -65,7 +65,8 @@ module "vmmodule" {
   location       = var.location
   admin_username = var.admin_username
   admin_password = var.admin_password
-  nic_id         = azurerm_network_interface.nic.id
+  nic_id         = module.vmmodule.vm_nic.id
+  vnet_name      = azurerm_virtual_network.vnet.name
   tags           = var.tags
 }
 
