@@ -8,6 +8,7 @@ variable "subnet_cidr2"     { type = string }
 variable "admin_username" {}
 variable "admin_password" {}
 variable "nic_id" {}
+variable "vmname" {type = string}  
 variable "tags" {
   type    = map(string)
   default = {}
