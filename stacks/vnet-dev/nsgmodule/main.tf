@@ -18,6 +18,31 @@ resource "azurerm_network_security_group" "test_nsg" {
   
 }
 
+# Resource group (dev only)
+resource "azurerm_resource_group" "rg" {
+  name     = "${var.name}-rg"
+  location = var.location
+  tags     = var.tags
+}
+
+# VNet
+resource "azurerm_virtual_network" "vnet" {
+  name                = "${var.name}-vnet"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  address_space       = [var.vnet_cidr]
+  tags                = var.tags
+}
+
+
+
+resource "azurerm_subnet" "subnet1" {
+  name                 = "${var.name}-subnet02"
+  resource_group_name  = azurerm_resource_group.rg.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+  address_prefixes     = [var.subnet_cidr2]
+}
+
 # Subnet
 resource "azurerm_subnet" "subnet" {
   name                 = "${var.name}-subnet01"
