@@ -1,5 +1,5 @@
 resource "azurerm_linux_virtual_machine" "vm1" {
-  name                = "${var.name}-vm"
+  name                = var.vmname
   resource_group_name = "${var.name}-rg"
   location            = var.location
   size                = "Standard_B1s"
@@ -8,8 +8,7 @@ resource "azurerm_linux_virtual_machine" "vm1" {
   admin_password                  = var.admin_password
   disable_password_authentication = false
 
-  network_interface_ids = vm_nic.id
-
+  network_interface_ids = [var.nic_id]
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
@@ -23,16 +22,3 @@ resource "azurerm_linux_virtual_machine" "vm1" {
   }
 }
 
-resource "azurerm_network_interface" "vm_nic" {
-  name                = "${var.name}-nic"
-  location            = var.location
-  resource_group_name = "${var.name}-rg"
-  tags                = var.tags
-
-  ip_configuration {
-    name                          = "ipconfig1"
-    subnet_id                     = azurerm_subnet.subnet.id
-    private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.subnet.id
-  }
-}
