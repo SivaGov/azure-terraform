@@ -22,7 +22,7 @@ terraform {
 
 
 #calling nsg module
-module "nsgmodule" {
+module "network" {
   source   = "./network"
   name     = var.name
   location = var.location
@@ -40,8 +40,8 @@ module "vmmodule" {
   vmname           = var.vmname
   admin_username   = var.admin_username
   admin_password   = var.admin_password
-  nic_id           = module.network.vm_nic.id
-  vnet_name        = module.network.vnet.name
+  nic_id           = module.network.nic_id
+  vnet_name        = module.network.vnet_name
 }
 
 /*output "rg_name"     { value = azurerm_resource_group.rg.name }

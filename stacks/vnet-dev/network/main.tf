@@ -34,7 +34,9 @@ resource "azurerm_virtual_network" "vnet" {
   tags                = var.tags
 }
 
-
+output "vnet_name" {
+  value = azurerm_virtual_network.vnet.name
+}
 
 resource "azurerm_subnet" "subnet1" {
   name                 = "${var.name}-subnet02"
@@ -68,6 +70,8 @@ resource "azurerm_network_interface" "vm_nic" {
 output "nic_id" {
   value = azurerm_network_interface.vm_nic.id
 }
+
+
 
 resource "azurerm_public_ip" "vm-pip" {
   name                = "${var.name}-pip"
