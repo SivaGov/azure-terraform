@@ -19,44 +19,16 @@ terraform {
   backend "azurerm" {}
 }
 
-# Resource group (dev only)
-resource "azurerm_resource_group" "rg" {
-  name     = "${var.name}-rg"
-  location = var.location
-  tags     = var.tags
-}
-
-# VNet
-resource "azurerm_virtual_network" "vnet" {
-  name                = "${var.name}-vnet"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
-  address_space       = [var.vnet_cidr]
-  tags                = var.tags
-}
-
-# Subnet
-resource "azurerm_subnet" "subnet" {
-  name                 = "${var.name}-subnet01"
-  resource_group_name  = azurerm_resource_group.rg.name
-  virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefixes     = [var.subnet_cidr]
-}
-
-resource "azurerm_subnet" "subnet1" {
-  name                 = "${var.name}-subnet02"
-  resource_group_name  = azurerm_resource_group.rg.name
-  virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefixes     = [var.subnet_cidr2]
-}
-
 
 
 #calling nsg module
 module "nsgmodule" {
-  source   = "./nsgmodule"
+  source   = "./network"
   name     = var.name
   location = var.location
+  subnet_cidr = var.subnet_cidr
+  subnet_cidr2 = var.subnet_cidr2
+  vnet_cidr = var.vnet_cidr
   tags     = var.tags
 }
 
