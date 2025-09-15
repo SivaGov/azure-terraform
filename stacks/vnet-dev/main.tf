@@ -22,7 +22,7 @@ terraform {
 
 
 #calling nsg module
-module "nsgmodule" {
+module "network" {
   source   = "./network"
   name     = var.name
   location = var.location
