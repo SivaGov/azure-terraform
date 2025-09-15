@@ -40,11 +40,11 @@ module "vmmodule" {
   vmname           = var.vmname
   admin_username   = var.admin_username
   admin_password   = var.admin_password
-  nic_id           = module.nsgmodule.nic_id
-  vnet_name        = azurerm_virtual_network.vnet.name
+  nic_id           = module.network.vm_nic.id
+  vnet_name        = module.network.vnet.name
 }
 
-output "rg_name"     { value = azurerm_resource_group.rg.name }
+/*output "rg_name"     { value = azurerm_resource_group.rg.name }
 output "vnet_name"   { value = azurerm_virtual_network.vnet.name }
-output "subnet_name" { value = azurerm_subnet.subnet.name }
+output "subnet_name" { value = azurerm_subnet.subnet.name }*/
 
