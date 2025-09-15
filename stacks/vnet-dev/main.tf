@@ -19,44 +19,16 @@ terraform {
   backend "azurerm" {}
 }
 
-# Resource group (dev only)
-resource "azurerm_resource_group" "rg" {
-  name     = "${var.name}-rg"
-  location = var.location
-  tags     = var.tags
-}
-
-# VNet
-resource "azurerm_virtual_network" "vnet" {
-  name                = "${var.name}-vnet"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
-  address_space       = [var.vnet_cidr]
-  tags                = var.tags
-}
-
-# Subnet
-resource "azurerm_subnet" "subnet" {
-  name                 = "${var.name}-subnet01"
-  resource_group_name  = azurerm_resource_group.rg.name
-  virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefixes     = [var.subnet_cidr]
-}
-
-resource "azurerm_subnet" "subnet1" {
-  name                 = "${var.name}-subnet02"
-  resource_group_name  = azurerm_resource_group.rg.name
-  virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefixes     = [var.subnet_cidr2]
-}
-
 
 
 #calling nsg module
 module "nsgmodule" {
-  source   = "./nsgmodule"
+  source   = "./network"
   name     = var.name
   location = var.location
+  subnet_cidr = var.subnet_cidr
+  subnet_cidr2 = var.subnet_cidr2
+  vnet_cidr = var.vnet_cidr
   tags     = var.tags
 }
 
@@ -68,11 +40,11 @@ module "vmmodule" {
   vmname           = var.vmname
   admin_username   = var.admin_username
   admin_password   = var.admin_password
-  nic_id           = module.nsgmodule.nic_id
-  vnet_name        = azurerm_virtual_network.vnet.name
+  nic_id           = module.network.vm_nic.id
+  vnet_name        = module.network.vnet.name
 }
 
-output "rg_name"     { value = azurerm_resource_group.rg.name }
+/*output "rg_name"     { value = azurerm_resource_group.rg.name }
 output "vnet_name"   { value = azurerm_virtual_network.vnet.name }
-output "subnet_name" { value = azurerm_subnet.subnet.name }
+output "subnet_name" { value = azurerm_subnet.subnet.name }*/
 
